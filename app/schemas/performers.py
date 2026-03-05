@@ -15,7 +15,7 @@ class PerformerBase(BaseModel):
     rating: float = 0
     past_performances: int = 0
     bio: str = ""
-    social_links: list[str] = []
+    social_links: list = []
 
 
 class PerformerCreate(PerformerBase):
@@ -31,7 +31,7 @@ class PerformerUpdate(BaseModel):
     rating: Optional[float] = None
     past_performances: Optional[int] = None
     bio: Optional[str] = None
-    social_links: Optional[list[str]] = None
+    social_links: Optional[list] = None
 
 
 class PerformerResponse(PerformerBase):
