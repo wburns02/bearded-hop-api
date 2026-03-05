@@ -19,16 +19,16 @@ class CustomerBase(BaseModel):
     total_visits: int = 0
     total_spent: float = 0
     avg_ticket: float = 0
-    favorite_beers: list[str] = []
-    dietary_restrictions: list[str] = []
-    tags: list[str] = []
+    favorite_beers: list = []
+    dietary_restrictions: list = []
+    tags: list = []
     loyalty_points: int = 0
     loyalty_tier: str = "Bronze"
     mug_club_member: bool = False
     mug_club_tier: Optional[str] = None
-    notes: str = ""
-    source: str = ""
-    family_members: list[str] = []
+    notes: Optional[str] = ""
+    source: Optional[str] = ""
+    family_members: list = []
 
 
 class CustomerCreate(CustomerBase):
@@ -47,16 +47,16 @@ class CustomerUpdate(BaseModel):
     total_visits: Optional[int] = None
     total_spent: Optional[float] = None
     avg_ticket: Optional[float] = None
-    favorite_beers: Optional[list[str]] = None
-    dietary_restrictions: Optional[list[str]] = None
-    tags: Optional[list[str]] = None
+    favorite_beers: Optional[list] = None
+    dietary_restrictions: Optional[list] = None
+    tags: Optional[list] = None
     loyalty_points: Optional[int] = None
     loyalty_tier: Optional[str] = None
     mug_club_member: Optional[bool] = None
     mug_club_tier: Optional[str] = None
     notes: Optional[str] = None
     source: Optional[str] = None
-    family_members: Optional[list[str]] = None
+    family_members: Optional[list] = None
 
 
 class CustomerResponse(CustomerBase):
