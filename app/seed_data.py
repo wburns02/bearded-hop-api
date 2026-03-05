@@ -456,6 +456,9 @@ async def run_seed(db: AsyncSession):
     ]
     db.add_all(wholesale_orders)
 
+    # Flush all parent rows so FK references work for production tables
+    await db.flush()
+
     # 30. Fermentation Vessels
     from app.models.fermentation_vessel import FermentationVessel
     vessels = [
