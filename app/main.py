@@ -8,6 +8,23 @@ from app.config import settings
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+    # Create all tables on startup
+    from app.database import engine, Base
+    # Import all models so Base.metadata knows about them
+    from app.models import (  # noqa: F401
+        user, beer, recipe, detailed_recipe, batch, gravity_reading,
+        tap_line, keg, keg_event, customer, visit_record, customer_note,
+        event, performer, reservation, open_tab, tab_item,
+        pos_transaction, transaction_item, floor_table, service_alert,
+        order_timeline, menu_item, inventory_item, purchase_order,
+        staff_member, staff_certification, schedule_shift,
+        wholesale_account, wholesale_order, mug_club_member,
+        email_campaign, daily_sales, monthly_financial, ttb_report,
+        compliance_item, social_metrics, content_calendar,
+        customer_segment, business_settings,
+    )
+    async with engine.begin() as conn:
+        await conn.run_sync(Base.metadata.create_all)
     yield
 
 
