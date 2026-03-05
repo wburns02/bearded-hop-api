@@ -456,6 +456,79 @@ async def run_seed(db: AsyncSession):
     ]
     db.add_all(wholesale_orders)
 
+    # Kegs
+    kegs = [
+        Keg(id=_id("keg-1"), keg_number="BH-001", size="1/2", gallons=15.5, status="on-tap", current_beer_id=_id("beer-1"), current_beer_name="Hill Country Haze", location="taproom", fill_date="2026-02-28", fill_count=8, last_cleaned="2026-02-27", purchase_date="2024-06-15", purchase_cost=150, history=[{"date": "2026-02-28", "event": "Filled with Hill Country Haze"}, {"date": "2026-02-27", "event": "Cleaned and sanitized"}]),
+        Keg(id=_id("keg-2"), keg_number="BH-002", size="1/2", gallons=15.5, status="on-tap", current_beer_id=_id("beer-2"), current_beer_name="Lone Star Lager", location="taproom", fill_date="2026-03-01", fill_count=12, last_cleaned="2026-02-28", purchase_date="2024-06-15", purchase_cost=150, history=[]),
+        Keg(id=_id("keg-3"), keg_number="BH-003", size="1/2", gallons=15.5, status="on-tap", current_beer_id=_id("beer-3"), current_beer_name="Bulverde Blonde", location="taproom", fill_date="2026-02-25", fill_count=15, last_cleaned="2026-02-24", purchase_date="2024-06-15", purchase_cost=150, history=[]),
+        Keg(id=_id("keg-4"), keg_number="BH-004", size="1/2", gallons=15.5, status="on-tap", current_beer_id=_id("beer-4"), current_beer_name="Texas Sunset Wheat", location="taproom", fill_date="2026-02-26", fill_count=10, last_cleaned="2026-02-25", purchase_date="2024-06-15", purchase_cost=150, history=[]),
+        Keg(id=_id("keg-5"), keg_number="BH-005", size="1/2", gallons=15.5, status="on-tap", current_beer_id=_id("beer-5"), current_beer_name="Mesquite Smoked Porter", location="taproom", fill_date="2026-02-22", fill_count=6, last_cleaned="2026-02-21", purchase_date="2024-09-10", purchase_cost=155, history=[]),
+        Keg(id=_id("keg-6"), keg_number="BH-006", size="1/6", gallons=5.16, status="filled", current_beer_id=_id("beer-1"), current_beer_name="Hill Country Haze", location="brewery-cold-room", fill_date="2026-03-02", fill_count=4, last_cleaned="2026-03-01", purchase_date="2024-09-10", purchase_cost=100, history=[]),
+        Keg(id=_id("keg-7"), keg_number="BH-007", size="1/6", gallons=5.16, status="filled", current_beer_id=_id("beer-3"), current_beer_name="Bulverde Blonde", location="brewery-cold-room", fill_date="2026-03-03", fill_count=6, last_cleaned="2026-03-02", purchase_date="2024-09-10", purchase_cost=100, history=[]),
+        Keg(id=_id("keg-8"), keg_number="BH-008", size="1/2", gallons=15.5, status="deployed", current_beer_id=_id("beer-1"), current_beer_name="Hill Country Haze", deployed_to=str(_id("wholesale-1")), deployed_to_name="The Rusty Tap", deployed_date="2026-02-28", expected_return_date="2026-03-14", fill_date="2026-02-27", fill_count=9, deposit=75, deposit_status="held", purchase_date="2024-06-15", purchase_cost=150, history=[]),
+        Keg(id=_id("keg-9"), keg_number="BH-009", size="1/6", gallons=5.16, status="deployed", current_beer_id=_id("beer-3"), current_beer_name="Bulverde Blonde", deployed_to=str(_id("wholesale-2")), deployed_to_name="Gruene General Store", deployed_date="2026-02-22", expected_return_date="2026-03-08", fill_date="2026-02-21", fill_count=7, deposit=50, deposit_status="held", purchase_date="2025-01-20", purchase_cost=105, history=[]),
+        Keg(id=_id("keg-10"), keg_number="BH-010", size="1/2", gallons=15.5, status="clean-empty", location="brewery-cold-room", fill_count=11, last_cleaned="2026-03-04", purchase_date="2024-06-15", purchase_cost=150, history=[]),
+        Keg(id=_id("keg-11"), keg_number="BH-011", size="1/2", gallons=15.5, status="clean-empty", location="brewery-cold-room", fill_count=5, last_cleaned="2026-03-03", purchase_date="2025-01-20", purchase_cost=155, history=[]),
+        Keg(id=_id("keg-12"), keg_number="BH-012", size="1/6", gallons=5.16, status="returned-dirty", location="dock", fill_count=8, purchase_date="2024-09-10", purchase_cost=100, notes="Returned from Canyon Lake BBQ", history=[]),
+        Keg(id=_id("keg-13"), keg_number="BH-013", size="1/4", gallons=7.75, status="cleaning", location="wash-station", fill_count=3, purchase_date="2025-06-01", purchase_cost=120, history=[]),
+        Keg(id=_id("keg-14"), keg_number="BH-014", size="1/2", gallons=15.5, status="deployed", current_beer_id=_id("beer-5"), current_beer_name="Mesquite Smoked Porter", deployed_to=str(_id("wholesale-3")), deployed_to_name="Canyon Lake BBQ", deployed_date="2026-02-20", expected_return_date="2026-03-06", fill_date="2026-02-19", fill_count=4, deposit=75, deposit_status="held", purchase_date="2025-01-20", purchase_cost=155, history=[]),
+        Keg(id=_id("keg-15"), keg_number="BH-015", size="1/6", gallons=5.16, status="missing", deployed_to=str(_id("wholesale-4")), deployed_to_name="Hill Country Market", deployed_date="2026-01-15", expected_return_date="2026-02-01", fill_count=6, deposit=50, deposit_status="held", purchase_date="2024-09-10", purchase_cost=100, notes="Overdue return — contacted 3/1", history=[]),
+    ]
+    db.add_all(kegs)
+
+    # Detailed Recipes
+    detailed_recipes = [
+        DetailedRecipe(id=_id("recipe-1"), beer_id=_id("beer-1"), name="Hill Country Haze", style="New England IPA", category="flagship", version=3, batch_size=7, target_og=1.068, target_fg=1.015, target_abv=6.8, target_ibu=45, target_srm=5, boil_time=60, mash_temp=152, mash_time=60,
+            grain_bill=[{"name": "2-Row Pale Malt", "weight": 120, "unit": "lbs", "percentage": 72}, {"name": "Flaked Oats", "weight": 25, "unit": "lbs", "percentage": 15}, {"name": "White Wheat", "weight": 17, "unit": "lbs", "percentage": 10}, {"name": "Honey Malt", "weight": 5, "unit": "lbs", "percentage": 3}],
+            hop_schedule=[{"name": "Citra", "amount": 2, "unit": "oz", "time": "60 min", "type": "bittering"}, {"name": "Mosaic", "amount": 3, "unit": "oz", "time": "15 min", "type": "flavor"}, {"name": "Citra", "amount": 4, "unit": "oz", "time": "0 min (whirlpool)", "type": "aroma"}, {"name": "Mosaic", "amount": 3, "unit": "oz", "time": "Dry Hop Day 4", "type": "dry-hop"}, {"name": "Galaxy", "amount": 2, "unit": "oz", "time": "Dry Hop Day 4", "type": "dry-hop"}],
+            yeast={"name": "London Ale III", "brand": "Wyeast", "code": "1318", "temp_range": "64-74°F", "attenuation": "73-77%"},
+            water_profile={"calcium": 100, "magnesium": 5, "sodium": 20, "sulfate": 50, "chloride": 150, "bicarbonate": 0},
+            total_cost=185.50, cost_per_barrel=26.50, cost_per_pint=0.85, last_brewed="2026-02-25", total_batches=12,
+            brew_history=[{"date": "2026-02-25", "batch": "BH-2026-012", "og": 1.068, "fg": None, "notes": "Current batch fermenting"}, {"date": "2026-01-10", "batch": "BH-2026-003", "og": 1.067, "fg": 1.014, "notes": "Great batch"}],
+            notes="Our flagship NEIPA. Juicy, hazy, tropical.", created_date="2025-06-01"),
+        DetailedRecipe(id=_id("recipe-2"), beer_id=_id("beer-2"), name="Lone Star Lager", style="American Lager", category="flagship", version=2, batch_size=7, target_og=1.048, target_fg=1.010, target_abv=4.8, target_ibu=18, target_srm=3, boil_time=60, mash_temp=148, mash_time=60,
+            grain_bill=[{"name": "Pilsner Malt", "weight": 100, "unit": "lbs", "percentage": 80}, {"name": "Rice Hulls", "weight": 15, "unit": "lbs", "percentage": 12}, {"name": "Corn Grits", "weight": 10, "unit": "lbs", "percentage": 8}],
+            hop_schedule=[{"name": "Hallertau", "amount": 1.5, "unit": "oz", "time": "60 min", "type": "bittering"}, {"name": "Saaz", "amount": 1, "unit": "oz", "time": "15 min", "type": "flavor"}],
+            yeast={"name": "Mexican Lager", "brand": "Imperial", "code": "L13", "temp_range": "50-56°F", "attenuation": "73-77%"},
+            water_profile={"calcium": 50, "magnesium": 5, "sodium": 10, "sulfate": 40, "chloride": 60, "bicarbonate": 0},
+            total_cost=95.00, cost_per_barrel=13.57, cost_per_pint=0.44, last_brewed="2026-02-15", total_batches=18,
+            brew_history=[{"date": "2026-02-15", "batch": "BH-2026-009", "og": 1.048, "fg": 1.010, "notes": "Clean lager, 4 week schedule"}],
+            notes="Crisp, clean, crushable Texas lager.", created_date="2025-04-01"),
+        DetailedRecipe(id=_id("recipe-3"), beer_id=_id("beer-3"), name="Bulverde Blonde", style="Cream Ale", category="flagship", version=4, batch_size=7, target_og=1.050, target_fg=1.012, target_abv=5.0, target_ibu=20, target_srm=4, boil_time=60, mash_temp=150, mash_time=60,
+            grain_bill=[{"name": "2-Row Pale Malt", "weight": 95, "unit": "lbs", "percentage": 76}, {"name": "Flaked Corn", "weight": 20, "unit": "lbs", "percentage": 16}, {"name": "Honey Malt", "weight": 10, "unit": "lbs", "percentage": 8}],
+            hop_schedule=[{"name": "Cascade", "amount": 1, "unit": "oz", "time": "60 min", "type": "bittering"}, {"name": "Mt. Hood", "amount": 0.5, "unit": "oz", "time": "5 min", "type": "aroma"}],
+            yeast={"name": "American Ale", "brand": "Safale", "code": "US-05", "temp_range": "59-75°F", "attenuation": "78-82%"},
+            water_profile={"calcium": 60, "magnesium": 5, "sodium": 10, "sulfate": 50, "chloride": 70, "bicarbonate": 0},
+            total_cost=78.00, cost_per_barrel=11.14, cost_per_pint=0.36, last_brewed="2026-02-20", total_batches=22,
+            brew_history=[{"date": "2026-02-20", "batch": "BH-2026-011", "og": 1.049, "fg": 1.011, "notes": "Best seller — always on tap"}],
+            notes="Our #1 seller. Approachable, smooth, easy-drinking.", created_date="2025-03-01"),
+        DetailedRecipe(id=_id("recipe-4"), beer_id=_id("beer-6"), name="Prickly Pear Sour", style="Berliner Weisse", category="seasonal", version=2, batch_size=7, target_og=1.042, target_fg=1.008, target_abv=4.2, target_ibu=5, target_srm=4, boil_time=15, mash_temp=148, mash_time=60,
+            grain_bill=[{"name": "Pilsner Malt", "weight": 65, "unit": "lbs", "percentage": 60}, {"name": "White Wheat", "weight": 35, "unit": "lbs", "percentage": 32}, {"name": "Acidulated Malt", "weight": 9, "unit": "lbs", "percentage": 8}],
+            hop_schedule=[{"name": "Hallertau", "amount": 0.5, "unit": "oz", "time": "15 min", "type": "bittering"}],
+            yeast={"name": "Philly Sour", "brand": "Lallemand", "code": "WLP-PS", "temp_range": "68-77°F", "attenuation": "75-85%"},
+            water_profile={"calcium": 40, "magnesium": 5, "sodium": 5, "sulfate": 30, "chloride": 40, "bicarbonate": 0},
+            total_cost=110.00, cost_per_barrel=15.71, cost_per_pint=0.50, last_brewed="2026-02-10", total_batches=6,
+            brew_history=[{"date": "2026-02-10", "batch": "BH-2026-007", "og": 1.043, "fg": 1.009, "notes": "Added prickly pear puree day 5"}],
+            notes="Summer seasonal. Tart, pink, refreshing with local prickly pear.", created_date="2025-07-15"),
+        DetailedRecipe(id=_id("recipe-5"), beer_id=_id("beer-10"), name="Barrel-Aged Imperial Stout", style="Imperial Stout", category="limited", version=1, batch_size=7, target_og=1.110, target_fg=1.030, target_abv=11.5, target_ibu=65, target_srm=40, boil_time=90, mash_temp=156, mash_time=75,
+            grain_bill=[{"name": "Maris Otter", "weight": 120, "unit": "lbs", "percentage": 60}, {"name": "Chocolate Malt", "weight": 20, "unit": "lbs", "percentage": 10}, {"name": "Roasted Barley", "weight": 16, "unit": "lbs", "percentage": 8}, {"name": "Crystal 120", "weight": 14, "unit": "lbs", "percentage": 7}, {"name": "Flaked Oats", "weight": 20, "unit": "lbs", "percentage": 10}, {"name": "Black Patent", "weight": 10, "unit": "lbs", "percentage": 5}],
+            hop_schedule=[{"name": "Magnum", "amount": 3, "unit": "oz", "time": "90 min", "type": "bittering"}, {"name": "East Kent Goldings", "amount": 2, "unit": "oz", "time": "15 min", "type": "flavor"}],
+            yeast={"name": "London ESB", "brand": "Wyeast", "code": "1968", "temp_range": "64-72°F", "attenuation": "67-71%"},
+            water_profile={"calcium": 120, "magnesium": 10, "sodium": 30, "sulfate": 100, "chloride": 75, "bicarbonate": 150},
+            total_cost=320.00, cost_per_barrel=45.71, cost_per_pint=1.47, last_brewed="2025-11-01", total_batches=3,
+            brew_history=[{"date": "2025-11-01", "batch": "BH-2025-045", "og": 1.108, "fg": 1.028, "notes": "12 months in bourbon barrels"}],
+            notes="Annual limited release. Aged in Garrison Bros bourbon barrels.", created_date="2025-05-01"),
+        DetailedRecipe(id=_id("recipe-6"), name="Spring Saison", style="Saison", category="seasonal", version=1, batch_size=7, target_og=1.062, target_fg=1.006, target_abv=7.2, target_ibu=28, target_srm=5, boil_time=90, mash_temp=148, mash_time=75,
+            grain_bill=[{"name": "Pilsner Malt", "weight": 100, "unit": "lbs", "percentage": 75}, {"name": "White Wheat", "weight": 20, "unit": "lbs", "percentage": 15}, {"name": "Munich Malt", "weight": 13, "unit": "lbs", "percentage": 10}],
+            hop_schedule=[{"name": "Styrian Goldings", "amount": 1.5, "unit": "oz", "time": "60 min", "type": "bittering"}, {"name": "Saaz", "amount": 1, "unit": "oz", "time": "5 min", "type": "aroma"}],
+            yeast={"name": "Belgian Saison", "brand": "Wyeast", "code": "3724", "temp_range": "70-95°F", "attenuation": "76-80%"},
+            water_profile={"calcium": 50, "magnesium": 5, "sodium": 10, "sulfate": 60, "chloride": 40, "bicarbonate": 0},
+            total_cost=105.00, cost_per_barrel=15.00, cost_per_pint=0.48, last_brewed="2026-02-28", total_batches=2,
+            brew_history=[{"date": "2026-02-28", "batch": "BH-2026-013", "og": 1.062, "fg": None, "notes": "Currently fermenting"}],
+            notes="Spring release. Dry, spicy, peppery.", created_date="2026-01-15"),
+    ]
+    db.add_all(detailed_recipes)
+
     # Flush all parent rows so FK references work for production tables
     await db.flush()
 
