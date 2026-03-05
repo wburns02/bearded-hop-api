@@ -33,8 +33,7 @@ app = FastAPI(title="Bearded Hop API", version="1.0.0", lifespan=lifespan)
 
 # CORS
 origins = [settings.FRONTEND_URL]
-if settings.ENVIRONMENT == "development":
-    origins.extend(["http://localhost:5173", "http://localhost:4173", "http://localhost:3000"])
+origins.extend(["http://localhost:5173", "http://localhost:5174", "http://localhost:4173", "http://localhost:3000"])
 
 app.add_middleware(
     CORSMiddleware,
