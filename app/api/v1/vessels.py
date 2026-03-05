@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 from sqlalchemy import select
 from uuid import UUID
-from datetime import datetime, timezone
+from datetime import datetime
 
 from app.api.deps import DbSession, CurrentUser
 from app.models.fermentation_vessel import FermentationVessel
@@ -60,7 +60,7 @@ async def update_vessel(id: UUID, body: VesselUpdate, db: DbSession, current_use
         raise NotFoundError("Vessel")
     for field, value in body.model_dump(exclude_unset=True).items():
         setattr(vessel, field, value)
-    vessel.updated_at = datetime.now(timezone.utc)
+    vessel.updated_at = datetime.utcnow()
     await db.commit()
     await db.refresh(vessel)
     return await _enrich(vessel, db)
@@ -89,7 +89,7 @@ async def add_vessel_reading(id: UUID, body: VesselReadingCreate, db: DbSession,
         )
         db.add(qc)
 
-    vessel.updated_at = datetime.now(timezone.utc)
+    vessel.updated_at = datetime.utcnow()
     await db.commit()
     await db.refresh(vessel)
     return await _enrich(vessel, db)

@@ -1,5 +1,5 @@
 import uuid
-from datetime import datetime, timezone
+from datetime import datetime
 from sqlalchemy import Column, String, Float, ForeignKey, DateTime
 from sqlalchemy.dialects.postgresql import UUID
 from app.database import Base
@@ -17,5 +17,5 @@ class FermentationVessel(Base):
     temperature_f = Column(Float, nullable=True)
     pressure_psi = Column(Float, nullable=True)
     notes = Column(String, default="")
-    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
-    updated_at = Column(DateTime, default=lambda: datetime.now(timezone.utc), onupdate=lambda: datetime.now(timezone.utc))
+    created_at = Column(DateTime, default=lambda: datetime.utcnow())
+    updated_at = Column(DateTime, default=lambda: datetime.utcnow(), onupdate=lambda: datetime.utcnow())

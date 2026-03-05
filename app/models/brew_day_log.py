@@ -1,5 +1,5 @@
 import uuid
-from datetime import datetime, timezone
+from datetime import datetime
 from sqlalchemy import Column, String, Float, Integer, ForeignKey, DateTime, Date
 from sqlalchemy.dialects.postgresql import UUID
 from app.database import Base
@@ -23,4 +23,4 @@ class BrewDayLog(Base):
     post_boil_volume_gal = Column(Float, nullable=True)
     notes = Column(String, default="")
     status = Column(String, nullable=False, default="scheduled")
-    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
+    created_at = Column(DateTime, default=datetime.utcnow)
