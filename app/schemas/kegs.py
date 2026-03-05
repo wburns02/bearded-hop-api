@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from datetime import date
+# dates stored as strings
 from typing import Any, Optional
 from uuid import UUID
 
@@ -18,14 +18,14 @@ class KegBase(BaseModel):
     location: str = "brewery-cold-room"
     deployed_to: Optional[str] = None
     deployed_to_name: Optional[str] = None
-    deployed_date: Optional[date] = None
-    expected_return_date: Optional[date] = None
-    fill_date: Optional[date] = None
+    deployed_date: Optional[str] = None
+    expected_return_date: Optional[str] = None
+    fill_date: Optional[str] = None
     fill_count: int = 0
-    last_cleaned: Optional[date] = None
+    last_cleaned: Optional[str] = None
     deposit: float = 0
     deposit_status: str = "not-applicable"
-    purchase_date: Optional[date] = None
+    purchase_date: Optional[str] = None
     purchase_cost: float = 0
     notes: str = ""
     history: list[Any] = []
@@ -46,14 +46,14 @@ class KegUpdate(BaseModel):
     location: Optional[str] = None
     deployed_to: Optional[str] = None
     deployed_to_name: Optional[str] = None
-    deployed_date: Optional[date] = None
-    expected_return_date: Optional[date] = None
-    fill_date: Optional[date] = None
+    deployed_date: Optional[str] = None
+    expected_return_date: Optional[str] = None
+    fill_date: Optional[str] = None
     fill_count: Optional[int] = None
-    last_cleaned: Optional[date] = None
+    last_cleaned: Optional[str] = None
     deposit: Optional[float] = None
     deposit_status: Optional[str] = None
-    purchase_date: Optional[date] = None
+    purchase_date: Optional[str] = None
     purchase_cost: Optional[float] = None
     notes: Optional[str] = None
     history: Optional[list[Any]] = None

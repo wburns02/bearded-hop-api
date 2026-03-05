@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from datetime import date
+# dates stored as strings
 from typing import Optional
 from uuid import UUID
 
@@ -45,8 +45,8 @@ class ComplianceItemBase(BaseModel):
     type: str
     name: str
     status: str = "compliant"
-    due_date: Optional[date] = None
-    last_completed: Optional[date] = None
+    due_date: Optional[str] = None
+    last_completed: Optional[str] = None
     notes: str = ""
 
 
@@ -58,8 +58,8 @@ class ComplianceItemUpdate(BaseModel):
     type: Optional[str] = None
     name: Optional[str] = None
     status: Optional[str] = None
-    due_date: Optional[date] = None
-    last_completed: Optional[date] = None
+    due_date: Optional[str] = None
+    last_completed: Optional[str] = None
     notes: Optional[str] = None
 
 

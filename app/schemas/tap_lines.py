@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from datetime import date
+# dates stored as strings
 from typing import Optional
 from uuid import UUID
 
@@ -16,8 +16,8 @@ class TapLineBase(BaseModel):
     ibu: Optional[int] = None
     keg_level: float = 100
     keg_size: str = "1/2"
-    tapped_date: Optional[date] = None
-    estimated_kick_date: Optional[date] = None
+    tapped_date: Optional[str] = None
+    estimated_kick_date: Optional[str] = None
     status: str = "active"
     pour_sizes: list[dict] = []
     total_pours: int = 0
@@ -33,8 +33,8 @@ class TapLineUpdate(BaseModel):
     ibu: Optional[int] = None
     keg_level: Optional[float] = None
     keg_size: Optional[str] = None
-    tapped_date: Optional[date] = None
-    estimated_kick_date: Optional[date] = None
+    tapped_date: Optional[str] = None
+    estimated_kick_date: Optional[str] = None
     status: Optional[str] = None
     pour_sizes: Optional[list[dict]] = None
     total_pours: Optional[int] = None
@@ -42,6 +42,4 @@ class TapLineUpdate(BaseModel):
 
 
 class TapLineResponse(TapLineBase):
-    id: UUID
-
     model_config = {"from_attributes": True}

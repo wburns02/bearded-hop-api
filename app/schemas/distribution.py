@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from datetime import date
+# dates stored as strings
 from typing import Any, Optional
 from uuid import UUID
 
@@ -21,7 +21,7 @@ class WholesaleAccountBase(BaseModel):
     status: str = "active"
     total_orders: int = 0
     total_revenue: float = 0
-    last_order: Optional[date] = None
+    last_order: Optional[str] = None
     kegs_out: int = 0
     credit_limit: float = 0
     payment_terms: str = "Net 30"
@@ -43,7 +43,7 @@ class WholesaleAccountUpdate(BaseModel):
     status: Optional[str] = None
     total_orders: Optional[int] = None
     total_revenue: Optional[float] = None
-    last_order: Optional[date] = None
+    last_order: Optional[str] = None
     kegs_out: Optional[int] = None
     credit_limit: Optional[float] = None
     payment_terms: Optional[str] = None
@@ -68,8 +68,8 @@ class WholesaleOrderBase(BaseModel):
     items: list[Any] = []
     total: float = 0
     status: str = "pending"
-    order_date: Optional[date] = None
-    delivery_date: Optional[date] = None
+    order_date: Optional[str] = None
+    delivery_date: Optional[str] = None
     payment_status: str = "current"
     notes: Optional[str] = None
 
@@ -85,8 +85,8 @@ class WholesaleOrderUpdate(BaseModel):
     items: Optional[list[Any]] = None
     total: Optional[float] = None
     status: Optional[str] = None
-    order_date: Optional[date] = None
-    delivery_date: Optional[date] = None
+    order_date: Optional[str] = None
+    delivery_date: Optional[str] = None
     payment_status: Optional[str] = None
     notes: Optional[str] = None
 

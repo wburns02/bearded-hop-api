@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from datetime import date, time
+# dates stored as strings
 from typing import Optional
 from uuid import UUID
 
@@ -11,10 +11,10 @@ class ShiftBase(BaseModel):
     staff_id: UUID
     staff_name: str = ""
     role: str = ""
-    date: date
+    date: str
     day_of_week: str = ""
-    start_time: time
-    end_time: time
+    start_time: str
+    end_time: str
     hours: float = 0
     section: str = "taproom"
     status: str = "scheduled"
@@ -29,10 +29,10 @@ class ShiftUpdate(BaseModel):
     staff_id: Optional[UUID] = None
     staff_name: Optional[str] = None
     role: Optional[str] = None
-    date: Optional[date] = None
+    date: Optional[str] = None
     day_of_week: Optional[str] = None
-    start_time: Optional[time] = None
-    end_time: Optional[time] = None
+    start_time: Optional[str] = None
+    end_time: Optional[str] = None
     hours: Optional[float] = None
     section: Optional[str] = None
     status: Optional[str] = None

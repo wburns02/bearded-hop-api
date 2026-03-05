@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from datetime import datetime
+# dates stored as strings
 from typing import Optional
 from uuid import UUID
 
@@ -28,7 +28,7 @@ class FloorTableBase(BaseModel):
     party_size: Optional[int] = None
     server_id: Optional[UUID] = None
     server_name: Optional[str] = None
-    seated_at: Optional[datetime] = None
+    seated_at: Optional[str] = None
     reservation_id: Optional[UUID] = None
 
 
@@ -49,7 +49,7 @@ class FloorTableUpdate(BaseModel):
     party_size: Optional[int] = None
     server_id: Optional[UUID] = None
     server_name: Optional[str] = None
-    seated_at: Optional[datetime] = None
+    seated_at: Optional[str] = None
     reservation_id: Optional[UUID] = None
 
 
@@ -80,7 +80,7 @@ class ServiceAlertBase(BaseModel):
     type: str
     message: str = ""
     priority: str = "medium"
-    created_at: Optional[datetime] = None
+    created_at: Optional[str] = None
 
 
 class ServiceAlertCreate(ServiceAlertBase):
@@ -100,7 +100,7 @@ class ServiceAlertResponse(ServiceAlertBase):
 class OrderTimelineResponse(BaseModel):
     id: UUID
     table_id: str
-    time: datetime
+    time: str
     action: str
     description: str = ""
 

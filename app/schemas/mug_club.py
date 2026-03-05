@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from datetime import date
+# dates stored as strings
 from typing import Any, Optional
 from uuid import UUID
 
@@ -11,8 +11,8 @@ class MugClubMemberBase(BaseModel):
     customer_id: Optional[UUID] = None
     customer_name: str = ""
     tier: str = "Standard"
-    member_since: Optional[date] = None
-    renewal_date: Optional[date] = None
+    member_since: Optional[str] = None
+    renewal_date: Optional[str] = None
     mug_number: int = 0
     mug_location: str = ""
     total_saved: float = 0
@@ -30,8 +30,8 @@ class MugClubMemberUpdate(BaseModel):
     customer_id: Optional[UUID] = None
     customer_name: Optional[str] = None
     tier: Optional[str] = None
-    member_since: Optional[date] = None
-    renewal_date: Optional[date] = None
+    member_since: Optional[str] = None
+    renewal_date: Optional[str] = None
     mug_number: Optional[int] = None
     mug_location: Optional[str] = None
     total_saved: Optional[float] = None

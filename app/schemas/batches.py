@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from datetime import date
+# dates stored as strings
 from typing import Optional
 from uuid import UUID
 
@@ -8,7 +8,7 @@ from pydantic import BaseModel
 
 
 class GravityReadingCreate(BaseModel):
-    date: date
+    date: str
     gravity: float
     temp: float
 
@@ -20,7 +20,7 @@ class BatchBase(BaseModel):
     style: str = ""
     recipe_id: Optional[UUID] = None
     status: str = "planned"
-    brew_date: Optional[date] = None
+    brew_date: Optional[str] = None
     target_og: float = 0
     actual_og: Optional[float] = None
     target_fg: float = 0
@@ -45,7 +45,7 @@ class BatchUpdate(BaseModel):
     style: Optional[str] = None
     recipe_id: Optional[UUID] = None
     status: Optional[str] = None
-    brew_date: Optional[date] = None
+    brew_date: Optional[str] = None
     target_og: Optional[float] = None
     actual_og: Optional[float] = None
     target_fg: Optional[float] = None

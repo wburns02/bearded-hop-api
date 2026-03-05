@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from datetime import date
+# dates stored as strings
 from uuid import UUID
 
 from pydantic import BaseModel
@@ -8,7 +8,7 @@ from pydantic import BaseModel
 
 class DailySalesResponse(BaseModel):
     id: UUID
-    date: date
+    date: str
     beer_revenue: float = 0
     food_revenue: float = 0
     na_revenue: float = 0

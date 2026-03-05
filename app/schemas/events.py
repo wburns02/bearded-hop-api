@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from datetime import date, time
+# dates stored as strings
 from typing import Optional
 from uuid import UUID
 
@@ -10,9 +10,9 @@ from pydantic import BaseModel
 class EventBase(BaseModel):
     title: str
     type: str
-    date: date
-    start_time: Optional[time] = None
-    end_time: Optional[time] = None
+    date: str
+    start_time: Optional[str] = None
+    end_time: Optional[str] = None
     description: str = ""
     performer_id: Optional[UUID] = None
     capacity: int = 0
@@ -34,9 +34,9 @@ class EventCreate(EventBase):
 class EventUpdate(BaseModel):
     title: Optional[str] = None
     type: Optional[str] = None
-    date: Optional[date] = None
-    start_time: Optional[time] = None
-    end_time: Optional[time] = None
+    date: Optional[str] = None
+    start_time: Optional[str] = None
+    end_time: Optional[str] = None
     description: Optional[str] = None
     performer_id: Optional[UUID] = None
     capacity: Optional[int] = None

@@ -1,21 +1,21 @@
 from __future__ import annotations
 
-from datetime import date
+# dates stored as strings
 from typing import Optional
 from uuid import UUID
 
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel
 
 
 class CustomerBase(BaseModel):
     first_name: str
     last_name: str
-    email: Optional[EmailStr] = None
+    email: Optional[str] = None
     phone: Optional[str] = None
-    date_of_birth: Optional[date] = None
-    anniversary: Optional[date] = None
-    first_visit: Optional[date] = None
-    last_visit: Optional[date] = None
+    date_of_birth: Optional[str] = None
+    anniversary: Optional[str] = None
+    first_visit: Optional[str] = None
+    last_visit: Optional[str] = None
     total_visits: int = 0
     total_spent: float = 0
     avg_ticket: float = 0
@@ -38,12 +38,12 @@ class CustomerCreate(CustomerBase):
 class CustomerUpdate(BaseModel):
     first_name: Optional[str] = None
     last_name: Optional[str] = None
-    email: Optional[EmailStr] = None
+    email: Optional[str] = None
     phone: Optional[str] = None
-    date_of_birth: Optional[date] = None
-    anniversary: Optional[date] = None
-    first_visit: Optional[date] = None
-    last_visit: Optional[date] = None
+    date_of_birth: Optional[str] = None
+    anniversary: Optional[str] = None
+    first_visit: Optional[str] = None
+    last_visit: Optional[str] = None
     total_visits: Optional[int] = None
     total_spent: Optional[float] = None
     avg_ticket: Optional[float] = None

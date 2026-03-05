@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from datetime import date
+# dates stored as strings
 from typing import Any, Optional
 from uuid import UUID
 
@@ -31,11 +31,11 @@ class DetailedRecipeBase(BaseModel):
     total_cost: float = 0
     cost_per_barrel: float = 0
     cost_per_pint: float = 0
-    last_brewed: Optional[date] = None
+    last_brewed: Optional[str] = None
     total_batches: int = 0
     brew_history: list[Any] = []
     notes: str = ""
-    created_date: Optional[date] = None
+    created_date: Optional[str] = None
 
 
 class DetailedRecipeCreate(DetailedRecipeBase):
@@ -66,11 +66,11 @@ class DetailedRecipeUpdate(BaseModel):
     total_cost: Optional[float] = None
     cost_per_barrel: Optional[float] = None
     cost_per_pint: Optional[float] = None
-    last_brewed: Optional[date] = None
+    last_brewed: Optional[str] = None
     total_batches: Optional[int] = None
     brew_history: Optional[list[Any]] = None
     notes: Optional[str] = None
-    created_date: Optional[date] = None
+    created_date: Optional[str] = None
 
 
 class DetailedRecipeResponse(DetailedRecipeBase):

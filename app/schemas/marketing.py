@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from datetime import date
+# dates stored as strings
 from typing import Optional
 from uuid import UUID
 
@@ -16,8 +16,8 @@ class EmailCampaignBase(BaseModel):
     subject: str = ""
     status: str = "draft"
     segment: str = ""
-    sent_date: Optional[date] = None
-    scheduled_date: Optional[date] = None
+    sent_date: Optional[str] = None
+    scheduled_date: Optional[str] = None
     recipients: int = 0
     opened: int = 0
     clicked: int = 0
@@ -34,8 +34,8 @@ class EmailCampaignUpdate(BaseModel):
     subject: Optional[str] = None
     status: Optional[str] = None
     segment: Optional[str] = None
-    sent_date: Optional[date] = None
-    scheduled_date: Optional[date] = None
+    sent_date: Optional[str] = None
+    scheduled_date: Optional[str] = None
     recipients: Optional[int] = None
     opened: Optional[int] = None
     clicked: Optional[int] = None
@@ -55,7 +55,7 @@ class EmailCampaignResponse(EmailCampaignBase):
 
 class SocialMetricsResponse(BaseModel):
     id: UUID
-    date: date
+    date: str
     instagram_followers: int = 0
     facebook_likes: int = 0
     untappd_checkins: int = 0
@@ -72,7 +72,7 @@ class SocialMetricsResponse(BaseModel):
 # ---------------------------------------------------------------------------
 
 class ContentCalendarBase(BaseModel):
-    date: date
+    date: str
     platform: str
     caption: str = ""
     status: str = "planned"
@@ -84,7 +84,7 @@ class ContentCalendarCreate(ContentCalendarBase):
 
 
 class ContentCalendarUpdate(BaseModel):
-    date: Optional[date] = None
+    date: Optional[str] = None
     platform: Optional[str] = None
     caption: Optional[str] = None
     status: Optional[str] = None

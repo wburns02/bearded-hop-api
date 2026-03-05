@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from datetime import date
+# dates stored as strings
 from typing import Any, Optional
 from uuid import UUID
 
@@ -13,13 +13,13 @@ class StaffBase(BaseModel):
     role: str
     email: Optional[str] = None
     phone: Optional[str] = None
-    hire_date: Optional[date] = None
+    hire_date: Optional[str] = None
     hourly_rate: float = 0
     status: str = "active"
     tabc_certified: bool = False
-    tabc_expiry: Optional[date] = None
+    tabc_expiry: Optional[str] = None
     food_handler_certified: bool = False
-    food_handler_expiry: Optional[date] = None
+    food_handler_expiry: Optional[str] = None
     hours_this_week: float = 0
     sales_this_week: float = 0
     avatar: Optional[str] = None
@@ -36,13 +36,13 @@ class StaffUpdate(BaseModel):
     role: Optional[str] = None
     email: Optional[str] = None
     phone: Optional[str] = None
-    hire_date: Optional[date] = None
+    hire_date: Optional[str] = None
     hourly_rate: Optional[float] = None
     status: Optional[str] = None
     tabc_certified: Optional[bool] = None
-    tabc_expiry: Optional[date] = None
+    tabc_expiry: Optional[str] = None
     food_handler_certified: Optional[bool] = None
-    food_handler_expiry: Optional[date] = None
+    food_handler_expiry: Optional[str] = None
     hours_this_week: Optional[float] = None
     sales_this_week: Optional[float] = None
     avatar: Optional[str] = None

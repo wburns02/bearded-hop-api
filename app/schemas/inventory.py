@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from datetime import date
+# dates stored as strings
 from typing import Optional
 from uuid import UUID
 
@@ -16,8 +16,8 @@ class InventoryItemBase(BaseModel):
     reorder_point: float = 0
     cost_per_unit: float = 0
     supplier: str = ""
-    last_ordered: Optional[date] = None
-    expiration_date: Optional[date] = None
+    last_ordered: Optional[str] = None
+    expiration_date: Optional[str] = None
     location: str = ""
 
 
@@ -34,8 +34,8 @@ class InventoryItemUpdate(BaseModel):
     reorder_point: Optional[float] = None
     cost_per_unit: Optional[float] = None
     supplier: Optional[str] = None
-    last_ordered: Optional[date] = None
-    expiration_date: Optional[date] = None
+    last_ordered: Optional[str] = None
+    expiration_date: Optional[str] = None
     location: Optional[str] = None
 
 
@@ -51,9 +51,9 @@ class PurchaseOrderBase(BaseModel):
     items: list[dict] = []
     total_cost: float = 0
     status: str = "draft"
-    order_date: Optional[date] = None
-    eta: Optional[date] = None
-    received_date: Optional[date] = None
+    order_date: Optional[str] = None
+    eta: Optional[str] = None
+    received_date: Optional[str] = None
     notes: Optional[str] = None
 
 
@@ -67,9 +67,9 @@ class PurchaseOrderUpdate(BaseModel):
     items: Optional[list[dict]] = None
     total_cost: Optional[float] = None
     status: Optional[str] = None
-    order_date: Optional[date] = None
-    eta: Optional[date] = None
-    received_date: Optional[date] = None
+    order_date: Optional[str] = None
+    eta: Optional[str] = None
+    received_date: Optional[str] = None
     notes: Optional[str] = None
 
 

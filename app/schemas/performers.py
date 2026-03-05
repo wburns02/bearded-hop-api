@@ -3,13 +3,13 @@ from __future__ import annotations
 from typing import Optional
 from uuid import UUID
 
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel
 
 
 class PerformerBase(BaseModel):
     name: str
     genre: str = ""
-    contact_email: Optional[EmailStr] = None
+    contact_email: Optional[str] = None
     contact_phone: Optional[str] = None
     fee: float = 0
     rating: float = 0
@@ -25,7 +25,7 @@ class PerformerCreate(PerformerBase):
 class PerformerUpdate(BaseModel):
     name: Optional[str] = None
     genre: Optional[str] = None
-    contact_email: Optional[EmailStr] = None
+    contact_email: Optional[str] = None
     contact_phone: Optional[str] = None
     fee: Optional[float] = None
     rating: Optional[float] = None
