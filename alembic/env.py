@@ -21,6 +21,7 @@ from app.models import wholesale_account, wholesale_order, mug_club_member
 from app.models import email_campaign, daily_sales, monthly_financial, ttb_report
 from app.models import compliance_item, social_metrics, content_calendar
 from app.models import customer_segment, business_settings
+from app.models import fermentation_vessel, brew_day_log, quality_check
 from app.config import settings
 
 config = context.config

@@ -22,6 +22,7 @@ async def lifespan(app: FastAPI):
         email_campaign, daily_sales, monthly_financial, ttb_report,
         compliance_item, social_metrics, content_calendar,
         customer_segment, business_settings,
+        fermentation_vessel, brew_day_log, quality_check,
     )
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
@@ -122,6 +123,18 @@ app.include_router(dashboard_router, prefix="/api/v1")
 
 from app.api.v1.reports import router as reports_router
 app.include_router(reports_router, prefix="/api/v1")
+
+from app.api.v1.vessels import router as vessels_router
+app.include_router(vessels_router, prefix="/api/v1")
+
+from app.api.v1.brew_days import router as brew_days_router
+app.include_router(brew_days_router, prefix="/api/v1")
+
+from app.api.v1.quality import router as quality_router
+app.include_router(quality_router, prefix="/api/v1")
+
+from app.api.v1.production import router as production_router
+app.include_router(production_router, prefix="/api/v1")
 
 from app.api.v1.seed import router as seed_router
 app.include_router(seed_router, prefix="/api/v1")

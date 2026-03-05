@@ -11,7 +11,8 @@ def _id(name: str) -> uuid.UUID:
 
 async def run_seed(db: AsyncSession):
     await db.execute(text("""
-        TRUNCATE TABLE order_timelines, service_alerts, floor_tables,
+        TRUNCATE TABLE quality_checks, brew_day_logs, fermentation_vessels,
+        order_timelines, service_alerts, floor_tables,
         pos_transactions, transaction_items, tab_items, open_tabs,
         wholesale_orders, wholesale_accounts, mug_club_members,
         email_campaigns, content_calendar, customer_segments, social_metrics,
@@ -454,5 +455,58 @@ async def run_seed(db: AsyncSession):
         WholesaleOrder(id=_id("wo-5"), order_number="WO-2026-105", account_id=_id("wholesale-2"), account_name="Gruene General Store", items=[{"beerName": "Prickly Pear Sour", "kegSize": "1/6", "quantity": 3, "unitPrice": 85}], total=480, status="pending", order_date="2026-03-04", payment_status="current"),
     ]
     db.add_all(wholesale_orders)
+
+    # 30. Fermentation Vessels
+    from app.models.fermentation_vessel import FermentationVessel
+    vessels = [
+        FermentationVessel(id=_id("vessel-fv1"), name="FV-1", vessel_type="fermenter", capacity_bbl=7.0, current_batch_id=_id("batch-1"), status="fermenting", temperature_f=64.5, pressure_psi=1.2, notes="Primary fermenter"),
+        FermentationVessel(id=_id("vessel-fv2"), name="FV-2", vessel_type="fermenter", capacity_bbl=7.0, current_batch_id=_id("batch-2"), status="fermenting", temperature_f=72.0, pressure_psi=0.8, notes="Saison runs warm"),
+        FermentationVessel(id=_id("vessel-fv3"), name="FV-3", vessel_type="unitank", capacity_bbl=7.0, current_batch_id=_id("batch-3"), status="conditioning", temperature_f=34.0, pressure_psi=12.0, notes="Cold crashing"),
+        FermentationVessel(id=_id("vessel-fv4"), name="FV-4", vessel_type="fermenter", capacity_bbl=14.0, status="empty", notes="Double-size fermenter"),
+        FermentationVessel(id=_id("vessel-bt1"), name="Bright Tank 1", vessel_type="bright_tank", capacity_bbl=7.0, current_batch_id=_id("batch-4"), status="carbonating", temperature_f=38.0, pressure_psi=14.0, notes="Force carbing"),
+        FermentationVessel(id=_id("vessel-bt2"), name="Bright Tank 2", vessel_type="bright_tank", capacity_bbl=14.0, status="cleaning", notes="CIP cycle running"),
+    ]
+    db.add_all(vessels)
+
+    # 31. Brew Day Logs
+    from app.models.brew_day_log import BrewDayLog
+    from datetime import date, datetime, timezone, timedelta
+    today = date.today()
+    brew_day_logs = [
+        BrewDayLog(id=_id("brewday-1"), batch_id=_id("batch-1"), scheduled_date=date(2026, 2, 25), actual_start=datetime(2026, 2, 25, 6, 0, tzinfo=timezone.utc), actual_end=datetime(2026, 2, 25, 14, 30, tzinfo=timezone.utc), brewer_id=_id("staff-1"), brewer_name="Mike Rodriguez", mash_temp_f=152.0, mash_duration_min=60, boil_duration_min=60, pre_boil_gravity=1.058, original_gravity=1.068, post_boil_volume_gal=217, notes="Smooth brew day, hit all targets", status="completed"),
+        BrewDayLog(id=_id("brewday-2"), batch_id=_id("batch-2"), scheduled_date=date(2026, 2, 28), actual_start=datetime(2026, 2, 28, 6, 0, tzinfo=timezone.utc), actual_end=datetime(2026, 2, 28, 14, 0, tzinfo=timezone.utc), brewer_id=_id("staff-1"), brewer_name="Mike Rodriguez", mash_temp_f=148.0, mash_duration_min=75, boil_duration_min=90, pre_boil_gravity=1.052, original_gravity=1.062, post_boil_volume_gal=217, notes="Extended mash for dryness", status="completed"),
+        BrewDayLog(id=_id("brewday-3"), batch_id=_id("batch-3"), scheduled_date=date(2026, 2, 20), actual_start=datetime(2026, 2, 20, 7, 0, tzinfo=timezone.utc), actual_end=datetime(2026, 2, 20, 15, 0, tzinfo=timezone.utc), brewer_id=_id("staff-1"), brewer_name="Mike Rodriguez", mash_temp_f=150.0, mash_duration_min=60, boil_duration_min=60, pre_boil_gravity=1.042, original_gravity=1.049, post_boil_volume_gal=217, notes="Added peaches on day 5", status="completed"),
+        BrewDayLog(id=_id("brewday-4"), batch_id=_id("batch-4"), scheduled_date=date(2026, 3, 1), actual_start=datetime(2026, 3, 1, 6, 30, tzinfo=timezone.utc), actual_end=datetime(2026, 3, 1, 14, 0, tzinfo=timezone.utc), brewer_id=_id("staff-1"), brewer_name="Mike Rodriguez", mash_temp_f=154.0, mash_duration_min=60, boil_duration_min=60, pre_boil_gravity=1.060, original_gravity=1.072, post_boil_volume_gal=434, notes="Double batch for summer stock", status="completed"),
+        BrewDayLog(id=_id("brewday-5"), batch_id=_id("batch-5"), scheduled_date=today + timedelta(days=2), brewer_id=_id("staff-1"), brewer_name="Mike Rodriguez", notes="New Hazy IPA recipe test", status="scheduled"),
+        BrewDayLog(id=_id("brewday-6"), batch_id=_id("batch-5"), scheduled_date=today + timedelta(days=5), brewer_id=_id("staff-1"), brewer_name="Mike Rodriguez", notes="Oktoberfest lager — needs long ferment slot", status="scheduled"),
+        BrewDayLog(id=_id("brewday-7"), batch_id=_id("batch-5"), scheduled_date=today + timedelta(days=9), brewer_id=_id("staff-1"), brewer_name="Mike Rodriguez", notes="Barrel-aged stout transfer day", status="scheduled"),
+        BrewDayLog(id=_id("brewday-8"), batch_id=_id("batch-5"), scheduled_date=today + timedelta(days=14), brewer_id=_id("staff-1"), brewer_name="Mike Rodriguez", notes="Double IPA pilot batch", status="scheduled"),
+    ]
+    db.add_all(brew_day_logs)
+
+    # 32. Quality Checks
+    from app.models.quality_check import QualityCheck
+    quality_checks = [
+        QualityCheck(id=_id("qc-1"), batch_id=_id("batch-1"), check_type="gravity", value="1.068", checked_by="Mike Rodriguez", notes="OG reading at pitch", pass_fail="pass"),
+        QualityCheck(id=_id("qc-2"), batch_id=_id("batch-1"), check_type="gravity", value="1.042", checked_by="Mike Rodriguez", notes="Day 3 check", pass_fail="pass"),
+        QualityCheck(id=_id("qc-3"), batch_id=_id("batch-1"), check_type="ph", value="4.3", checked_by="Mike Rodriguez", notes="Mash pH in range", pass_fail="pass"),
+        QualityCheck(id=_id("qc-4"), batch_id=_id("batch-1"), check_type="appearance", value="Hazy golden, thick krausen", checked_by="Mike Rodriguez", notes="Active fermentation", pass_fail="pass"),
+        QualityCheck(id=_id("qc-5"), batch_id=_id("batch-2"), check_type="gravity", value="1.062", checked_by="Mike Rodriguez", notes="OG at pitch", pass_fail="pass"),
+        QualityCheck(id=_id("qc-6"), batch_id=_id("batch-2"), check_type="gravity", value="1.038", checked_by="Mike Rodriguez", notes="Day 2 — fast start", pass_fail="pass"),
+        QualityCheck(id=_id("qc-7"), batch_id=_id("batch-2"), check_type="aroma", value="Spicy, peppery, fruity esters", checked_by="Mike Rodriguez", notes="Classic saison character developing", pass_fail="pass"),
+        QualityCheck(id=_id("qc-8"), batch_id=_id("batch-3"), check_type="gravity", value="1.049", checked_by="Mike Rodriguez", notes="OG reading", pass_fail="pass"),
+        QualityCheck(id=_id("qc-9"), batch_id=_id("batch-3"), check_type="gravity", value="1.011", checked_by="Mike Rodriguez", notes="FG reached, ready for conditioning", pass_fail="pass"),
+        QualityCheck(id=_id("qc-10"), batch_id=_id("batch-3"), check_type="taste", value="Clean wheat character, peach comes through nicely", checked_by="Mike Rodriguez", notes="Pre-packaging taste panel", pass_fail="pass"),
+        QualityCheck(id=_id("qc-11"), batch_id=_id("batch-3"), check_type="appearance", value="Pale gold, slight haze, good head retention", checked_by="Mike Rodriguez", pass_fail="pass"),
+        QualityCheck(id=_id("qc-12"), batch_id=_id("batch-4"), check_type="gravity", value="1.072", checked_by="Mike Rodriguez", notes="OG — slightly over target", pass_fail="pass"),
+        QualityCheck(id=_id("qc-13"), batch_id=_id("batch-4"), check_type="dissolved_oxygen", value="< 30 ppb", checked_by="Mike Rodriguez", notes="Bright tank DO check", pass_fail="pass"),
+        QualityCheck(id=_id("qc-14"), batch_id=_id("batch-4"), check_type="carbonation", value="2.5 volumes CO2", checked_by="Mike Rodriguez", notes="Target achieved", pass_fail="pass"),
+        QualityCheck(id=_id("qc-15"), batch_id=_id("batch-1"), check_type="gravity", value="1.025", checked_by="Mike Rodriguez", notes="Day 6 reading — still dropping", pass_fail="pass"),
+    ]
+    db.add_all(quality_checks)
+
+    # Need a 5th batch for future brew days to reference
+    batch5 = Batch(id=_id("batch-5"), batch_number="BH-2026-017", beer_name="Hazy Daze IPA", style="New England IPA", status="planned", brew_date=(today + timedelta(days=2)).isoformat(), target_og=1.065, target_fg=1.014, tank_id="FV-4", volume=14, notes="New recipe test batch")
+    db.add(batch5)
 
     await db.commit()
