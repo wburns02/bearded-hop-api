@@ -31,6 +31,20 @@ async def list_customers(
     return result.scalars().all()
 
 
+@router.get("/all-visits")
+async def list_all_visits(db: DbSession, current_user: CurrentUser):
+    """Return all visit records for all customers."""
+    result = await db.execute(select(VisitRecord))
+    return result.scalars().all()
+
+
+@router.get("/all-notes")
+async def list_all_notes(db: DbSession, current_user: CurrentUser):
+    """Return all customer notes for all customers."""
+    result = await db.execute(select(CustomerNote))
+    return result.scalars().all()
+
+
 @router.get("/{id}", response_model=CustomerResponse)
 async def get_customer(id: UUID, db: DbSession, current_user: CurrentUser):
     result = await db.execute(select(Customer).where(Customer.id == id))
@@ -70,20 +84,6 @@ async def delete_customer(id: UUID, db: DbSession, current_user: CurrentUser):
         raise NotFoundError("Customer")
     await db.delete(customer)
     await db.commit()
-
-
-@router.get("/all-visits")
-async def list_all_visits(db: DbSession, current_user: CurrentUser):
-    """Return all visit records for all customers."""
-    result = await db.execute(select(VisitRecord))
-    return result.scalars().all()
-
-
-@router.get("/all-notes")
-async def list_all_notes(db: DbSession, current_user: CurrentUser):
-    """Return all customer notes for all customers."""
-    result = await db.execute(select(CustomerNote))
-    return result.scalars().all()
 
 
 @router.get("/{id}/visits")
