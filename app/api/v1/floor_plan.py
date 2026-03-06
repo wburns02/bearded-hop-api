@@ -155,6 +155,12 @@ async def dismiss_alert(id: UUID, db: DbSession, current_user: CurrentUser):
 # Order Timeline
 # ---------------------------------------------------------------------------
 
+@router.get("/timeline", response_model=list[OrderTimelineResponse])
+async def get_all_timelines(db: DbSession, current_user: CurrentUser):
+    result = await db.execute(select(OrderTimeline))
+    return result.scalars().all()
+
+
 @router.get("/timeline/{table_id}", response_model=list[OrderTimelineResponse])
 async def get_table_timeline(table_id: str, db: DbSession, current_user: CurrentUser):
     result = await db.execute(

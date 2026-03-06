@@ -56,6 +56,8 @@ async def run_seed(db: AsyncSession):
     from app.models.floor_table import FloorTable
     from app.models.service_alert import ServiceAlert
     from app.models.order_timeline import OrderTimeline
+    from app.models.visit_record import VisitRecord
+    from app.models.customer_note import CustomerNote
 
     # 1. Admin user
     admin = User(
@@ -77,6 +79,65 @@ async def run_seed(db: AsyncSession):
         Customer(id=_id("customer-8"), first_name="Linda", last_name="Thompson", email="linda.t@email.com", phone="(830) 555-0108", first_visit="2026-02-20", last_visit="2026-03-03", total_visits=4, total_spent=186.00, avg_ticket=46.50, favorite_beers=["Ginger Beer", "Craft Root Beer"], dietary_restrictions=["vegan"], tags=["new"], loyalty_points=250, loyalty_tier="Bronze", mug_club_member=False, notes="Vegan, prefers NA beverages", source="yelp"),
     ]
     db.add_all(customers)
+
+    # 2a. Visit Records
+    visit_records = [
+        # Jake Morrison — 24 total visits, seeding recent 5
+        VisitRecord(id=_id("visit-1"), customer_id=_id("customer-1"), date="2026-03-02", day_of_week="Sunday", arrival_time="12:30 PM", party_size=3, total_spent=89.50, beers_ordered=[{"beerName": "Hill Country Haze", "qty": 2}, {"beerName": "Bulverde Blonde", "qty": 1}], food_ordered=[{"item": "Smoked Wings", "qty": 1}, {"item": "Kids Mac & Cheese", "qty": 1}], tab_closed_by="Emily", rating=5, notes="Family lunch, Max loved the root beer"),
+        VisitRecord(id=_id("visit-2"), customer_id=_id("customer-1"), date="2026-02-22", day_of_week="Saturday", arrival_time="4:00 PM", party_size=4, total_spent=124.00, beers_ordered=[{"beerName": "Hill Country Haze", "qty": 3}, {"beerName": "Texas Sunset Wheat", "qty": 1}], food_ordered=[{"item": "Loaded Nachos", "qty": 1}, {"item": "Brisket Plate", "qty": 1}], tab_closed_by="Mike", rating=5),
+        VisitRecord(id=_id("visit-3"), customer_id=_id("customer-1"), date="2026-02-15", day_of_week="Saturday", arrival_time="2:00 PM", party_size=2, total_spent=67.00, beers_ordered=[{"beerName": "Hill Country Haze", "qty": 2}, {"beerName": "Prickly Pear Sour", "qty": 1}], food_ordered=[{"item": "Pretzel Bites", "qty": 1}], tab_closed_by="Emily", rating=4),
+        VisitRecord(id=_id("visit-4"), customer_id=_id("customer-1"), date="2026-02-08", day_of_week="Saturday", arrival_time="5:30 PM", party_size=3, total_spent=95.00, beers_ordered=[{"beerName": "Hill Country Haze", "qty": 2}, {"beerName": "Bulverde Blonde", "qty": 2}], food_ordered=[{"item": "Smoked Wings", "qty": 2}], tab_closed_by="Mike", rating=5),
+        VisitRecord(id=_id("visit-5"), customer_id=_id("customer-1"), date="2026-02-01", day_of_week="Saturday", arrival_time="3:00 PM", party_size=2, total_spent=58.00, beers_ordered=[{"beerName": "Hill Country Haze", "qty": 2}], food_ordered=[{"item": "Burger", "qty": 1}], tab_closed_by="Emily"),
+        # Maria Gonzalez — 16 total visits, seeding recent 4
+        VisitRecord(id=_id("visit-6"), customer_id=_id("customer-2"), date="2026-03-03", day_of_week="Monday", arrival_time="6:00 PM", party_size=2, total_spent=72.50, beers_ordered=[{"beerName": "Texas Sunset Wheat", "qty": 2}, {"beerName": "Prickly Pear Sour", "qty": 1}], food_ordered=[{"item": "Garden Salad", "qty": 1}], tab_closed_by="Emily", rating=4, notes="Patio seating as usual"),
+        VisitRecord(id=_id("visit-7"), customer_id=_id("customer-2"), date="2026-02-25", day_of_week="Tuesday", arrival_time="5:30 PM", party_size=1, total_spent=42.00, beers_ordered=[{"beerName": "Texas Sunset Wheat", "qty": 2}], food_ordered=[{"item": "Fish Tacos", "qty": 1}], tab_closed_by="Mike", rating=5),
+        VisitRecord(id=_id("visit-8"), customer_id=_id("customer-2"), date="2026-02-18", day_of_week="Tuesday", arrival_time="6:30 PM", party_size=3, total_spent=98.00, beers_ordered=[{"beerName": "Prickly Pear Sour", "qty": 2}, {"beerName": "Texas Sunset Wheat", "qty": 2}], food_ordered=[{"item": "Nachos", "qty": 1}, {"item": "Wings", "qty": 1}], tab_closed_by="Emily", rating=4),
+        VisitRecord(id=_id("visit-9"), customer_id=_id("customer-2"), date="2026-02-10", day_of_week="Monday", arrival_time="7:00 PM", party_size=2, total_spent=55.00, beers_ordered=[{"beerName": "Prickly Pear Sour", "qty": 2}], food_ordered=[{"item": "Pretzel Bites", "qty": 1}], tab_closed_by="Mike"),
+        # Tom Henderson — 20 total visits, seeding 4
+        VisitRecord(id=_id("visit-10"), customer_id=_id("customer-3"), date="2026-03-04", day_of_week="Tuesday", arrival_time="7:00 PM", party_size=5, total_spent=145.00, beers_ordered=[{"beerName": "Lone Star Lager", "qty": 5}, {"beerName": "Mesquite Smoked Porter", "qty": 3}], food_ordered=[{"item": "Nachos", "qty": 2}], tab_closed_by="Emily", rating=5, notes="Trivia night — his team won!"),
+        VisitRecord(id=_id("visit-11"), customer_id=_id("customer-3"), date="2026-02-25", day_of_week="Tuesday", arrival_time="6:45 PM", party_size=4, total_spent=112.00, beers_ordered=[{"beerName": "Lone Star Lager", "qty": 4}, {"beerName": "Mesquite Smoked Porter", "qty": 2}], food_ordered=[{"item": "Wings", "qty": 2}], tab_closed_by="Mike", rating=4),
+        VisitRecord(id=_id("visit-12"), customer_id=_id("customer-3"), date="2026-02-18", day_of_week="Tuesday", arrival_time="7:00 PM", party_size=5, total_spent=130.00, beers_ordered=[{"beerName": "Lone Star Lager", "qty": 6}], food_ordered=[{"item": "Brisket Plate", "qty": 2}], tab_closed_by="Emily"),
+        VisitRecord(id=_id("visit-13"), customer_id=_id("customer-3"), date="2026-02-11", day_of_week="Tuesday", arrival_time="7:15 PM", party_size=4, total_spent=98.00, beers_ordered=[{"beerName": "Mesquite Smoked Porter", "qty": 3}, {"beerName": "Lone Star Lager", "qty": 3}], food_ordered=[{"item": "Nachos", "qty": 1}], tab_closed_by="Mike", rating=4),
+        # Bobby Whitfield — 32 total visits, seeding 5
+        VisitRecord(id=_id("visit-14"), customer_id=_id("customer-5"), date="2026-03-05", day_of_week="Wednesday", arrival_time="4:00 PM", party_size=1, total_spent=95.00, beers_ordered=[{"beerName": "Barrel-Aged Imperial Stout", "qty": 2}, {"beerName": "Hill Country Haze", "qty": 2}], food_ordered=[{"item": "Brisket Plate", "qty": 1}], tab_closed_by="Mike", rating=5, notes="Bought a crowler of the BA Stout"),
+        VisitRecord(id=_id("visit-15"), customer_id=_id("customer-5"), date="2026-03-01", day_of_week="Saturday", arrival_time="1:00 PM", party_size=2, total_spent=142.00, beers_ordered=[{"beerName": "Hill Country Haze", "qty": 3}, {"beerName": "Barrel-Aged Imperial Stout", "qty": 2}], food_ordered=[{"item": "Smoked Wings", "qty": 1}, {"item": "Loaded Nachos", "qty": 1}], tab_closed_by="Emily", rating=5),
+        VisitRecord(id=_id("visit-16"), customer_id=_id("customer-5"), date="2026-02-22", day_of_week="Saturday", arrival_time="3:00 PM", party_size=1, total_spent=78.00, beers_ordered=[{"beerName": "Barrel-Aged Imperial Stout", "qty": 2}, {"beerName": "Hill Country Haze", "qty": 1}], food_ordered=[], tab_closed_by="Mike", rating=5),
+        VisitRecord(id=_id("visit-17"), customer_id=_id("customer-5"), date="2026-02-15", day_of_week="Saturday", arrival_time="2:00 PM", party_size=3, total_spent=165.00, beers_ordered=[{"beerName": "Hill Country Haze", "qty": 4}, {"beerName": "Barrel-Aged Imperial Stout", "qty": 3}], food_ordered=[{"item": "Brisket Plate", "qty": 2}], tab_closed_by="Emily", rating=4),
+        VisitRecord(id=_id("visit-18"), customer_id=_id("customer-5"), date="2026-02-08", day_of_week="Saturday", arrival_time="4:30 PM", party_size=1, total_spent=62.00, beers_ordered=[{"beerName": "Barrel-Aged Imperial Stout", "qty": 2}], food_ordered=[{"item": "Pretzel Bites", "qty": 1}], tab_closed_by="Mike", rating=5),
+        # Carlos Rivera — 18 total visits, seeding 3
+        VisitRecord(id=_id("visit-19"), customer_id=_id("customer-7"), date="2026-03-05", day_of_week="Wednesday", arrival_time="5:00 PM", party_size=2, total_spent=84.00, beers_ordered=[{"beerName": "Mesquite Smoked Porter", "qty": 2}, {"beerName": "Jalapeño Cream Ale", "qty": 2}], food_ordered=[{"item": "Nachos", "qty": 1}], tab_closed_by="Emily", rating=4),
+        VisitRecord(id=_id("visit-20"), customer_id=_id("customer-7"), date="2026-02-26", day_of_week="Wednesday", arrival_time="6:00 PM", party_size=1, total_spent=48.00, beers_ordered=[{"beerName": "Jalapeño Cream Ale", "qty": 2}, {"beerName": "Mesquite Smoked Porter", "qty": 1}], food_ordered=[], tab_closed_by="Mike"),
+        VisitRecord(id=_id("visit-21"), customer_id=_id("customer-7"), date="2026-02-19", day_of_week="Wednesday", arrival_time="5:30 PM", party_size=3, total_spent=96.00, beers_ordered=[{"beerName": "Mesquite Smoked Porter", "qty": 3}, {"beerName": "Jalapeño Cream Ale", "qty": 2}], food_ordered=[{"item": "Wings", "qty": 1}, {"item": "Burger", "qty": 1}], tab_closed_by="Emily", rating=5),
+    ]
+    db.add_all(visit_records)
+
+    # 2b. Customer Notes
+    customer_notes = [
+        # Jake Morrison
+        CustomerNote(id=_id("note-1"), customer_id=_id("customer-1"), date="2026-03-02", author="Emily Chen", type="compliment", content="Jake mentioned he loves our new Haze recipe — said it's the best NEIPA in the Hill Country."),
+        CustomerNote(id=_id("note-2"), customer_id=_id("customer-1"), date="2026-02-15", author="Mike Rodriguez", type="note", content="Jake's son Max is obsessed with the root beer. Consider a kids loyalty punch card."),
+        CustomerNote(id=_id("note-3"), customer_id=_id("customer-1"), date="2026-01-25", author="Emily Chen", type="milestone", content="Jake hit 20 visits — presented him with a custom Bearded Hop pint glass."),
+        # Maria Gonzalez
+        CustomerNote(id=_id("note-4"), customer_id=_id("customer-2"), date="2026-03-03", author="Emily Chen", type="note", content="Maria asked about gluten-free options. Consider adding GF beer or cider to rotation."),
+        CustomerNote(id=_id("note-5"), customer_id=_id("customer-2"), date="2026-02-14", author="Mike Rodriguez", type="compliment", content="Maria brought 4 friends for Valentine's — all loved the Prickly Pear Sour."),
+        # Tom Henderson
+        CustomerNote(id=_id("note-6"), customer_id=_id("customer-3"), date="2026-03-04", author="Emily Chen", type="compliment", content="Tom's trivia team won again! 8 wins in a row. He's bringing in new regulars every week."),
+        CustomerNote(id=_id("note-7"), customer_id=_id("customer-3"), date="2026-02-20", author="Mike Rodriguez", type="note", content="Tom asked about hosting a private trivia night for his company. Get him a quote."),
+        # Ashley Chen
+        CustomerNote(id=_id("note-8"), customer_id=_id("customer-4"), date="2026-03-01", author="Emily Chen", type="note", content="Ashley is very appreciative of our NA options. She's a craft beverage enthusiast who doesn't drink alcohol."),
+        # Bobby Whitfield
+        CustomerNote(id=_id("note-9"), customer_id=_id("customer-5"), date="2026-03-05", author="Mike Rodriguez", type="milestone", content="Bobby hit 30 visits AND Platinum tier! Presented him with a custom engraved mug."),
+        CustomerNote(id=_id("note-10"), customer_id=_id("customer-5"), date="2026-02-22", author="Emily Chen", type="note", content="Bobby wants to be notified of any barrel-aged releases. Add him to the VIP release list."),
+        CustomerNote(id=_id("note-11"), customer_id=_id("customer-5"), date="2026-02-10", author="Mike Rodriguez", type="compliment", content="Bobby brought 3 Untappd friends. They rated our BA Stout 4.8 — great exposure."),
+        # Diane Foster
+        CustomerNote(id=_id("note-12"), customer_id=_id("customer-6"), date="2026-03-02", author="Emily Chen", type="note", content="Diane loves bringing her kids on weekends. Suggested we add a small play area near the beer garden."),
+        # Carlos Rivera
+        CustomerNote(id=_id("note-13"), customer_id=_id("customer-7"), date="2026-03-05", author="Emily Chen", type="note", content="Carlos is interested in homebrewing. Mike offered to give him a brewery tour next week."),
+        CustomerNote(id=_id("note-14"), customer_id=_id("customer-7"), date="2026-02-15", author="Mike Rodriguez", type="compliment", content="Carlos has been telling everyone about our Jalapeño Cream Ale on his food blog."),
+        # Linda Thompson
+        CustomerNote(id=_id("note-15"), customer_id=_id("customer-8"), date="2026-03-03", author="Emily Chen", type="note", content="Linda asked if we could add a vegan chili to the menu. She'd love more plant-based food options."),
+    ]
+    db.add_all(customer_notes)
 
     # 3. Beers
     beers = [
